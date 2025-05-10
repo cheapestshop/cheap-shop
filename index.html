@@ -236,9 +236,17 @@
     }).render('#paypal-button-container');
 
     // Also show a Stripe redirect button
+<script>
+  function showPaymentModal(product) {
+    const modal = document.getElementById("paymentModal");
+    modal.style.display = "block";
+
+    const container = document.getElementById("stripe-button-container");
+    container.innerHTML = ""; // Clear existing buttons if any
+
     const stripeBtn = document.createElement('a');
-    stripeBtn.href = product.stripe;
-    stripeBtn.target = "https://buy.stripe.com/test_00wbJ0bDh4tNfSw4W5cs800";
+    stripeBtn.href = product.stripe; // Each product should have a .stripe field with a valid Stripe Checkout link
+    stripeBtn.target = "_blank"; // Open Stripe Checkout in a new tab
     stripeBtn.textContent = "Pay with Card";
     stripeBtn.style = `
       display: block;
@@ -249,16 +257,16 @@
       text-align: center;
       border-radius: 8px;
       text-decoration: none;
+      font-weight: bold;
     `;
-    document.getElementById("paypal-button-container").appendChild(stripeBtn);
+
+    container.appendChild(stripeBtn);
   }
 
   function closeModal() {
     document.getElementById("paymentModal").style.display = "none";
   }
 
-  renderProduct();
+  renderProduct(); // Initial product render
 </script>
 
-</body>
-</html>
