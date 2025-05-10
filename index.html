@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cheap Nitro & Cosmetics</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -15,7 +14,7 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #fafafa;
+      background-color: #f4f4f4;
       color: #333;
     }
 
@@ -24,89 +23,92 @@
       color: white;
       text-align: center;
       padding: 30px 20px;
-      font-size: 24px;
+    }
+
+    header h1 {
+      font-size: 28px;
       font-weight: 600;
     }
 
     .carousel {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 40px auto;
+      overflow: hidden;
       position: relative;
       width: 100%;
-      max-width: 600px;
+      max-width: 700px;
+      margin: 40px auto;
     }
 
-    .arrow {
-      font-size: 30px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 1;
-    }
-
-    .arrow.left {
-      left: 10px;
-    }
-
-    .arrow.right {
-      right: 10px;
+    .product-wrapper {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
     }
 
     .product {
+      min-width: 100%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
       background: white;
       padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 400px;
       text-align: center;
-      transition: transform 0.3s;
     }
 
     .product img {
       width: 100%;
-      height: 200px;
+      max-height: 200px;
       object-fit: contain;
-      border-radius: 12px;
-      margin-bottom: 20px;
+      border-radius: 10px;
     }
 
     .product h2 {
-      font-size: 22px;
-      margin-bottom: 10px;
+      font-size: 20px;
+      margin: 15px 0 10px;
     }
 
     .product p {
-      font-size: 18px;
-      color: #666;
+      font-size: 16px;
+      color: #555;
     }
 
-    .buy-btn {
+    .controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .controls button {
+      font-size: 24px;
+      padding: 10px 20px;
+      margin: 0 10px;
+      cursor: pointer;
+      border: none;
+      background-color: #9e2a2f;
+      color: white;
+      border-radius: 10px;
+    }
+
+    .floating-btn {
       position: fixed;
       bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: #9e2a2f;
-      color: white;
-      border: none;
       padding: 15px 30px;
-      font-size: 18px;
+      background: #635bff;
+      color: white;
+      font-size: 16px;
       border-radius: 30px;
+      border: none;
       cursor: pointer;
-      z-index: 999;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-weight: bold;
     }
 
     /* Modal */
     .modal {
       display: none;
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(0, 0, 0, 0.6);
       justify-content: center;
       align-items: center;
@@ -114,159 +116,127 @@
     }
 
     .modal-content {
-      background: white;
+      background: #fff;
       padding: 30px;
-      border-radius: 12px;
-      width: 400px;
-      max-width: 90%;
+      border-radius: 10px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
     }
 
-    .modal-content h3 {
-      margin-bottom: 20px;
-      font-size: 22px;
-    }
-
-    .close-btn {
+    .modal-content a {
+      display: inline-block;
       margin-top: 20px;
-      background: #ccc;
-      border: none;
+      padding: 12px 24px;
+      background-color: #635bff;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .modal-content button {
+      margin-top: 15px;
       padding: 10px 20px;
-      border-radius: 25px;
+      border: none;
+      background: #ccc;
+      border-radius: 8px;
       cursor: pointer;
-    }
-
-    #paypal-button-container {
-      margin-top: 20px;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>💸 Cheap Discord Nitro & Game Cosmetics</h1>
+  </header>
 
-<header>💸 Cheap Discord Nitro & Game Cosmetics</header>
-
-<div class="carousel">
-  <button class="arrow left" onclick="prevProduct()">❮</button>
-  <div id="product-display" class="product"></div>
-  <button class="arrow right" onclick="nextProduct()">❯</button>
-</div>
-
-<button class="buy-btn" onclick="openModal()">Buy Now</button>
-
-<!-- Payment Modal -->
-<div class="modal" id="paymentModal">
-  <div class="modal-content">
-    <h3 id="modalTitle">Checkout</h3>
-    <div id="paypal-button-container"></div>
-    <button class="close-btn" onclick="closeModal()">Cancel</button>
+  <div class="carousel">
+    <div class="product-wrapper" id="carouselItems">
+      <!-- Products dynamically inserted -->
+    </div>
   </div>
-</div>
 
-<script>
-  const products = [
-    {
-      name: "Discord Nitro - 1 Month",
-      price: "$2.99",
-      image: "https://cdn-icons-png.flaticon.com/512/5968/5968756.png",
-      stripe: "https://buy.stripe.com/test_1234abcd1234abcd1234", // Replace with actual URL
-      paypalId: "NITRO1"
-    },
-    {
-      name: "CS:GO AK-47 Redline",
-      price: "$5.49",
-      image: "https://cdn.cloudflare.steamstatic.com/apps/730/icons/econ/default_generated/weapon_ak47_cu_redline_light_large.7f9373d4e3faacb014ea6e167716b514ff19d758.png",
-      stripe: "https://buy.stripe.com/test_5678efgh5678efgh5678",
-      paypalId: "AK47RED"
-    },
-    {
-      name: "Fortnite Galaxy Skin",
-      price: "$3.99",
-      image: "https://static.wikia.nocookie.net/fortnite_gamepedia/images/7/77/Icon_-_Galaxy_Scout.png",
-      stripe: "https://buy.stripe.com/test_9012ijkl9012ijkl9012",
-      paypalId: "GALAXY"
-    }
-  ];
+  <div class="controls">
+    <button onclick="prevProduct()">⬅️</button>
+    <button onclick="nextProduct()">➡️</button>
+  </div>
 
-  let currentIndex = 0;
+  <button class="floating-btn" onclick="buyCurrentProduct()">Buy Now</button>
 
-  function renderProduct() {
-    const product = products[currentIndex];
-    const display = document.getElementById("product-display");
-    display.innerHTML = `
-      <img src="${product.image}" alt="${product.name}">
-      <h2>${product.name}</h2>
-      <p>${product.price}</p>
-    `;
-  }
+  <div class="modal" id="paymentModal">
+    <div class="modal-content">
+      <h3 id="modalProductName"></h3>
+      <a id="stripeLink" href="#" target="_blank">Pay with Card</a>
+      <button onclick="closeModal()">Close</button>
+    </div>
+  </div>
 
-  function prevProduct() {
-    currentIndex = (currentIndex - 1 + products.length) % products.length;
-    renderProduct();
-  }
-
-  function nextProduct() {
-    currentIndex = (currentIndex + 1) % products.length;
-    renderProduct();
-  }
-
-  function openModal() {
-    const product = products[currentIndex];
-    document.getElementById("modalTitle").textContent = `Buy ${product.name}`;
-    document.getElementById("paymentModal").style.display = "flex";
-
-    // Clean PayPal container before rendering new buttons
-    document.getElementById("paypal-button-container").innerHTML = "";
-
-    // Render PayPal Button
-    paypal.Buttons({
-      createOrder: function(data, actions) {
-        return actions.order.create({
-          purchase_units: [{
-            description: product.name,
-            amount: {
-              value: product.price.replace('$','')
-            }
-          }]
-        });
+  <script>
+    const products = [
+      {
+        name: "Discord Nitro - 1 Month",
+        price: "$2.99",
+        img: "https://cdn-icons-png.flaticon.com/512/5968/5968756.png",
+        stripe: "https://buy.stripe.com/test_00wbJ0bDh4tNfSw4W5"
       },
-      onApprove: function(data, actions) {
-        return actions.order.capture().then(function(details) {
-          alert('Payment completed by ' + details.payer.name.given_name);
-        });
+      {
+        name: "CS:GO AK-47 Redline",
+        price: "$5.49",
+        img: "https://cdn.cloudflare.steamstatic.com/apps/730/icons/econ/default_generated/weapon_ak47_cu_redline_light_large.7f9373d4e3faacb014ea6e167716b514ff19d758.png",
+        stripe: "https://buy.stripe.com/test_4gw5ne3XV9pB3i8eV1"
+      },
+      {
+        name: "Fortnite Galaxy Skin",
+        price: "$3.99",
+        img: "https://static.wikia.nocookie.net/fortnite_gamepedia/images/7/77/Icon_-_Galaxy_Scout.png",
+        stripe: "https://buy.stripe.com/test_5kAeYj2v9c9F9qYaEG"
       }
-    }).render('#paypal-button-container');
+    ];
 
-    // Also show a Stripe redirect button
-<script>
-  function showPaymentModal(product) {
-    const modal = document.getElementById("paymentModal");
-    modal.style.display = "block";
+    let currentIndex = 0;
 
-    const container = document.getElementById("stripe-button-container");
-    container.innerHTML = ""; // Clear existing buttons if any
+    const carouselItems = document.getElementById('carouselItems');
+    products.forEach(product => {
+      const div = document.createElement('div');
+      div.className = 'product';
+      div.innerHTML = `
+        <img src="${product.img}" alt="${product.name}">
+        <h2>${product.name}</h2>
+        <p>${product.price}</p>
+      `;
+      carouselItems.appendChild(div);
+    });
 
-    const stripeBtn = document.createElement('a');
-    stripeBtn.href = product.stripe; // Each product should have a .stripe field with a valid Stripe Checkout link
-    stripeBtn.target = "_blank"; // Open Stripe Checkout in a new tab
-    stripeBtn.textContent = "Pay with Card";
-    stripeBtn.style = `
-      display: block;
-      margin-top: 20px;
-      padding: 12px;
-      background: #635bff;
-      color: white;
-      text-align: center;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-    `;
+    function updateCarousel() {
+      carouselItems.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
 
-    container.appendChild(stripeBtn);
-  }
+    function nextProduct() {
+      if (currentIndex < products.length - 1) {
+        currentIndex++;
+        updateCarousel();
+      }
+    }
 
-  function closeModal() {
-    document.getElementById("paymentModal").style.display = "none";
-  }
+    function prevProduct() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    }
 
-  renderProduct(); // Initial product render
-</script>
+    function buyCurrentProduct() {
+      const product = products[currentIndex];
+      document.getElementById('modalProductName').textContent = product.name;
+      document.getElementById('stripeLink').href = product.stripe;
+      document.getElementById('paymentModal').style.display = 'flex';
+    }
 
+    function closeModal() {
+      document.getElementById('paymentModal').style.display = 'none';
+    }
+
+    updateCarousel();
+  </script>
+</body>
+</html>
