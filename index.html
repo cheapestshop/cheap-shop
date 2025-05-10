@@ -121,7 +121,7 @@
       border-radius: 10px;
       text-align: center;
       width: 90%;
-      max-width: 400px;
+      max-width: 500px;
     }
 
     .modal-content a {
@@ -154,6 +154,14 @@
       font-weight: bold;
       color: #2a6bff;
     }
+
+    .payment-status {
+      margin-top: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #ff5722;
+    }
+
   </style>
 </head>
 <body>
@@ -182,6 +190,7 @@
         Crypto Payment Only!<br>
         Send payment to the following address: <span class="crypto-address">0x4ca18a6dFB4ec81eBDC785aC9979193bB3eF03AC</span>
       </p>
+      <p id="paymentStatus" class="payment-status">Waiting for payment...</p>
       <button onclick="closeModal()">Close</button>
     </div>
   </div>
@@ -241,10 +250,23 @@
       const product = products[currentIndex];
       document.getElementById('modalProductName').textContent = product.name;
       document.getElementById('paymentModal').style.display = 'flex';
+
+      // Simulate checking if payment is received
+      simulatePaymentCheck();
     }
 
     function closeModal() {
       document.getElementById('paymentModal').style.display = 'none';
+    }
+
+    function simulatePaymentCheck() {
+      // Here, you'd integrate the payment gateway's API to check for a successful payment
+      // For this demo, we'll just simulate a delay and change the payment status after 10 seconds
+
+      setTimeout(() => {
+        document.getElementById('paymentStatus').textContent = "Payment Confirmed! 🎉";
+        document.getElementById('paymentStatus').style.color = "green";
+      }, 10000); // Simulate 10 seconds for payment confirmation
     }
 
     updateCarousel();
