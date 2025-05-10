@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cheap Nitro & Cosmetics</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -14,13 +14,14 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
+      background: #001f3f;
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
     }
 
     header {
-      background-color: #9e2a2f;
-      color: white;
+      background-color: #0074D9;
       text-align: center;
       padding: 30px 20px;
     }
@@ -46,9 +47,9 @@
 
     .product {
       min-width: 100%;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
       border-radius: 15px;
-      background: white;
+      background: #002b5c;
       padding: 20px;
       text-align: center;
     }
@@ -58,6 +59,7 @@
       max-height: 200px;
       object-fit: contain;
       border-radius: 10px;
+      background: white;
     }
 
     .product h2 {
@@ -67,23 +69,29 @@
 
     .product p {
       font-size: 16px;
-      color: #555;
+      color: #ccc;
     }
 
-    .controls {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .controls button {
-      font-size: 24px;
-      padding: 10px 20px;
-      margin: 0 10px;
-      cursor: pointer;
-      border: none;
-      background-color: #9e2a2f;
+    .arrow-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 116, 217, 0.8);
       color: white;
-      border-radius: 10px;
+      border: none;
+      font-size: 28px;
+      padding: 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .arrow-left {
+      left: 10px;
+    }
+
+    .arrow-right {
+      right: 10px;
     }
 
     .floating-btn {
@@ -92,8 +100,8 @@
       left: 50%;
       transform: translateX(-50%);
       padding: 15px 30px;
-      background: #635bff;
-      color: white;
+      background: #7FDBFF;
+      color: #001f3f;
       font-size: 16px;
       border-radius: 30px;
       border: none;
@@ -101,15 +109,12 @@
       font-weight: bold;
     }
 
-    /* Modal */
     .modal {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
       justify-content: center;
       align-items: center;
       z-index: 1000;
@@ -117,26 +122,24 @@
 
     .modal-content {
       background: #fff;
+      color: #333;
       padding: 30px;
       border-radius: 10px;
       text-align: center;
       width: 90%;
-      max-width: 500px;
+      max-width: 400px;
     }
 
-    .modal-content a {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background-color: #635bff;
-      color: white;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
+    .modal-content code {
+      display: block;
+      background: #eee;
+      padding: 10px;
+      margin: 15px 0;
+      font-size: 14px;
+      border-radius: 5px;
     }
 
     .modal-content button {
-      margin-top: 15px;
       padding: 10px 20px;
       border: none;
       background: #ccc;
@@ -144,53 +147,37 @@
       cursor: pointer;
     }
 
-    .crypto-info {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #777;
+    /* Snowfall */
+    #snow {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
     }
-
-    .crypto-address {
-      font-weight: bold;
-      color: #2a6bff;
-    }
-
-    .payment-status {
-      margin-top: 30px;
-      font-size: 16px;
-      font-weight: bold;
-      color: #ff5722;
-    }
-
   </style>
 </head>
 <body>
+  <canvas id="snow"></canvas>
+
   <header>
-    <h1>💸 Cheap Discord Nitro & Game Cosmetics</h1>
+    <h1>❄️ Cheap Discord Nitro & Game Cosmetics</h1>
   </header>
 
   <div class="carousel">
-    <div class="product-wrapper" id="carouselItems">
-      <!-- Products dynamically inserted -->
-    </div>
+    <button class="arrow-btn arrow-left" onclick="prevProduct()">&#9664;</button>
+    <div class="product-wrapper" id="carouselItems"></div>
+    <button class="arrow-btn arrow-right" onclick="nextProduct()">&#9654;</button>
   </div>
 
-  <div class="controls">
-    <button onclick="prevProduct()">⬅️</button>
-    <button onclick="nextProduct()">➡️</button>
-  </div>
-
-  <button class="floating-btn" onclick="buyCurrentProduct()">Buy Now</button>
+  <button class="floating-btn" onclick="buyCurrentProduct()">Buy with Crypto</button>
 
   <div class="modal" id="paymentModal">
     <div class="modal-content">
       <h3 id="modalProductName"></h3>
-      <p>More payment methods coming soon.</p>
-      <p class="crypto-info">
-        Crypto Payment Only!<br>
-        Send payment to the following address: <span class="crypto-address">0x4ca18a6dFB4ec81eBDC785aC9979193bB3eF03AC</span>
-      </p>
-      <p id="paymentStatus" class="payment-status">Waiting for payment...</p>
+      <p>Send crypto to the address below:</p>
+      <code>0x4ca18a6dFB4ec81eBDC785aC9979193bB3eF03AC</code>
+      <p><small>More payment methods coming soon!</small></p>
       <button onclick="closeModal()">Close</button>
     </div>
   </div>
@@ -205,18 +192,18 @@
       {
         name: "CS:GO AK-47 Redline",
         price: "$5.49",
-        img: "https://cdn.cloudflare.steamstatic.com/apps/730/icons/econ/default_generated/weapon_ak47_cu_redline_light_large.7f9373d4e3faacb014ea6e167716b514ff19d758.png"
+        img: "https://cdn.akamai.steamstatic.com/economy/image/class/730/3021880407/200fx200"
       },
       {
         name: "Fortnite Galaxy Skin",
         price: "$3.99",
-        img: "https://static.wikia.nocookie.net/fortnite_gamepedia/images/7/77/Icon_-_Galaxy_Scout.png"
+        img: "https://www.pngmart.com/files/22/Fortnite-Galaxy-Skin-PNG-Transparent.png"
       }
     ];
 
     let currentIndex = 0;
-
     const carouselItems = document.getElementById('carouselItems');
+
     products.forEach(product => {
       const div = document.createElement('div');
       div.className = 'product';
@@ -250,26 +237,54 @@
       const product = products[currentIndex];
       document.getElementById('modalProductName').textContent = product.name;
       document.getElementById('paymentModal').style.display = 'flex';
-
-      // Simulate checking if payment is received
-      simulatePaymentCheck();
     }
 
     function closeModal() {
       document.getElementById('paymentModal').style.display = 'none';
     }
 
-    function simulatePaymentCheck() {
-      // Here, you'd integrate the payment gateway's API to check for a successful payment
-      // For this demo, we'll just simulate a delay and change the payment status after 10 seconds
+    updateCarousel();
 
-      setTimeout(() => {
-        document.getElementById('paymentStatus').textContent = "Payment Confirmed! 🎉";
-        document.getElementById('paymentStatus').style.color = "green";
-      }, 10000); // Simulate 10 seconds for payment confirmation
+    // Simple snowfall effect
+    const canvas = document.getElementById('snow');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let snowflakes = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     }
 
-    updateCarousel();
+    function createSnowflake() {
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 3 + 2,
+        speedY: Math.random() * 1 + 0.5,
+        speedX: Math.random() * 0.5 - 0.25
+      };
+    }
+
+    function updateSnowflakes() {
+      ctx.clearRect(0, 0, width, height);
+      snowflakes.forEach(flake => {
+        flake.y += flake.speedY;
+        flake.x += flake.speedX;
+        if (flake.y > height) flake.y = -flake.radius;
+        if (flake.x > width || flake.x < 0) flake.x = Math.random() * width;
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "white";
+        ctx.fill();
+      });
+      requestAnimationFrame(updateSnowflakes);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    snowflakes = Array.from({ length: 100 }, createSnowflake);
+    updateSnowflakes();
   </script>
 </body>
 </html>
