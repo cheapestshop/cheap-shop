@@ -143,6 +143,17 @@
       border-radius: 8px;
       cursor: pointer;
     }
+
+    .crypto-info {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .crypto-address {
+      font-weight: bold;
+      color: #2a6bff;
+    }
   </style>
 </head>
 <body>
@@ -166,7 +177,11 @@
   <div class="modal" id="paymentModal">
     <div class="modal-content">
       <h3 id="modalProductName"></h3>
-      <a id="stripeLink" href="#" target="_blank">Pay with Card</a>
+      <p>More payment methods coming soon.</p>
+      <p class="crypto-info">
+        Crypto Payment Only!<br>
+        Send payment to the following address: <span class="crypto-address">0x4ca18a6dFB4ec81eBDC785aC9979193bB3eF03AC</span>
+      </p>
       <button onclick="closeModal()">Close</button>
     </div>
   </div>
@@ -176,20 +191,17 @@
       {
         name: "Discord Nitro - 1 Month",
         price: "$2.99",
-        img: "https://cdn-icons-png.flaticon.com/512/5968/5968756.png",
-        stripe: "https://buy.stripe.com/test_00wbJ0bDh4tNfSw4W5"
+        img: "https://cdn-icons-png.flaticon.com/512/5968/5968756.png"
       },
       {
         name: "CS:GO AK-47 Redline",
         price: "$5.49",
-        img: "https://cdn.cloudflare.steamstatic.com/apps/730/icons/econ/default_generated/weapon_ak47_cu_redline_light_large.7f9373d4e3faacb014ea6e167716b514ff19d758.png",
-        stripe: "https://buy.stripe.com/test_4gw5ne3XV9pB3i8eV1"
+        img: "https://cdn.cloudflare.steamstatic.com/apps/730/icons/econ/default_generated/weapon_ak47_cu_redline_light_large.7f9373d4e3faacb014ea6e167716b514ff19d758.png"
       },
       {
         name: "Fortnite Galaxy Skin",
         price: "$3.99",
-        img: "https://static.wikia.nocookie.net/fortnite_gamepedia/images/7/77/Icon_-_Galaxy_Scout.png",
-        stripe: "https://buy.stripe.com/test_5kAeYj2v9c9F9qYaEG"
+        img: "https://static.wikia.nocookie.net/fortnite_gamepedia/images/7/77/Icon_-_Galaxy_Scout.png"
       }
     ];
 
@@ -228,7 +240,6 @@
     function buyCurrentProduct() {
       const product = products[currentIndex];
       document.getElementById('modalProductName').textContent = product.name;
-      document.getElementById('stripeLink').href = product.stripe;
       document.getElementById('paymentModal').style.display = 'flex';
     }
 
