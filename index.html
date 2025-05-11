@@ -7,98 +7,135 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background: url('https://i.imgur.com/sHye3KQ.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1.5rem;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
     .card-brand-icon {
-      width: 50px;
-      height: 30px;
+      width: 40px;
+      height: 25px;
       object-fit: contain;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center text-white">
-  <div class="text-white text-4xl font-bold mb-8">Digital Goods</div>
+<body class="bg-gradient-to-br from-blue-900 to-blue-500 text-white flex flex-col items-center justify-center py-10">
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
-    <!-- Product Cards -->
-    <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-4 flex flex-col items-center">
-      <img src="https://upload.wikimedia.org/wikipedia/en/0/03/Fortnite_Galaxy_Skin.png" alt="Fortnite Skin" class="w-40 h-40 object-contain" />
-      <div class="text-lg font-semibold mt-2 text-white">Fortnite Galaxy Skin</div>
-      <div class="text-blue-400 font-bold">$3.99</div>
-      <button onclick="openPaymentModal('Fortnite Galaxy Skin', '3.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full transition duration-300">
-        Buy Now
-      </button>
+  <!-- Snowfall Effect -->
+  <script>
+    for (let i = 0; i < 50; i++) {
+      const snowflake = document.createElement('div');
+      snowflake.innerHTML = '❄';
+      snowflake.classList.add('snowflake');
+      snowflake.style.left = `${Math.random() * 100}vw`;
+      snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
+      snowflake.style.fontSize = `${Math.random() * 10 + 10}px`;
+      document.body.appendChild(snowflake);
+    }
+  </script>
+
+  <h1 class="text-4xl font-bold mb-6">Digital Goods</h1>
+
+  <div class="flex items-center space-x-4 mb-4">
+    <button onclick="scrollCarousel(-1)" class="text-3xl">&#8592;</button>
+    <button onclick="scrollCarousel(1)" class="text-3xl">&#8594;</button>
+  </div>
+
+  <div id="productCarousel" class="flex space-x-6 overflow-x-auto px-4 w-full max-w-5xl pb-8">
+    <div class="bg-white text-black rounded-2xl shadow-lg p-4 flex flex-col items-center min-w-[300px]">
+      <img src="https://static.wikia.nocookie.net/fortnite/images/7/76/Galaxy_Skin_-_Outfit_-_Fortnite.png" alt="Fortnite Skin" class="w-40 h-40 object-contain" />
+      <div class="text-lg font-semibold mt-2">Fortnite Galaxy Skin</div>
+      <div class="text-blue-600 font-bold">$3.99</div>
+      <button onclick="openPaymentModal('Fortnite Galaxy Skin', '3.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
     </div>
-    <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-4 flex flex-col items-center">
-      <img src="https://cdn.cloudflare.steamstatic.com/apps/csgo/images/csgo_react/cs2.jpg" alt="CSGO Skin" class="w-40 h-40 object-contain" />
-      <div class="text-lg font-semibold mt-2 text-white">CSGO Knife Skin</div>
-      <div class="text-blue-400 font-bold">$5.99</div>
-      <button onclick="openPaymentModal('CSGO Knife Skin', '5.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full transition duration-300">
-        Buy Now
-      </button>
+
+    <div class="bg-white text-black rounded-2xl shadow-lg p-4 flex flex-col items-center min-w-[300px]">
+      <img src="https://upload.wikimedia.org/wikipedia/en/e/e0/Counter-Strike_2_cover_art.jpg" alt="CSGO Skin" class="w-40 h-40 object-contain" />
+      <div class="text-lg font-semibold mt-2">CSGO Knife Skin</div>
+      <div class="text-blue-600 font-bold">$4.99</div>
+      <button onclick="openPaymentModal('CSGO Knife Skin', '4.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
     </div>
-    <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-4 flex flex-col items-center">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Discord_Logo.png" alt="Discord Nitro" class="w-40 h-40 object-contain" />
-      <div class="text-lg font-semibold mt-2 text-white">Discord Nitro 1 Month</div>
-      <div class="text-blue-400 font-bold">$2.99</div>
-      <button onclick="openPaymentModal('Discord Nitro', '2.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full transition duration-300">
-        Buy Now
-      </button>
+
+    <div class="bg-white text-black rounded-2xl shadow-lg p-4 flex flex-col items-center min-w-[300px]">
+      <img src="https://cdn.icon-icons.com/icons2/2108/PNG/512/discord_icon_130958.png" alt="Discord Nitro" class="w-40 h-40 object-contain" />
+      <div class="text-lg font-semibold mt-2">Discord Nitro</div>
+      <div class="text-blue-600 font-bold">$2.99</div>
+      <button onclick="openPaymentModal('Discord Nitro', '2.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
+    </div>
+
+    <div class="bg-white text-black rounded-2xl shadow-lg p-4 flex flex-col items-center min-w-[300px]">
+      <img src="https://www.minecraft.net/content/dam/games/minecraft/key-art/Minecraft-xbox-keyart.jpg" alt="Minecraft Premium" class="w-40 h-40 object-contain" />
+      <div class="text-lg font-semibold mt-2">Minecraft Premium</div>
+      <div class="text-blue-600 font-bold">$5.99</div>
+      <button onclick="openPaymentModal('Minecraft Premium', '5.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
     </div>
   </div>
 
   <!-- Payment Modal -->
-  <div id="paymentModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-    <div class="bg-white text-black shadow-xl rounded-2xl p-8 w-full max-w-md relative">
-      <button onclick="closeModal()" class="absolute top-2 right-4 text-xl font-bold">&times;</button>
-      <h2 class="text-2xl font-semibold mb-6 text-center">Card Payment</h2>
-      <form id="paymentForm" class="space-y-4">
+  <div id="paymentModal" class="modal-overlay hidden">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md text-black relative overflow-y-auto max-h-[90vh]">
+      <button onclick="closeModal()" class="absolute top-2 right-3 text-xl font-bold">&times;</button>
+      <h2 class="text-2xl font-semibold mb-4 text-center">Card Payment</h2>
+      <form id="paymentForm" class="space-y-3">
         <div>
-          <label class="block text-sm font-medium mb-1">Name on Card</label>
-          <input type="text" required class="w-full border rounded-lg px-3 py-2" placeholder="John Doe">
+          <label>Name on Card</label>
+          <input required class="w-full border px-3 py-2 rounded-lg" placeholder="John Doe">
         </div>
         <div>
-          <label class="block text-sm font-medium mb-1">Card Number</label>
+          <label>Card Number</label>
           <div class="relative">
-            <input type="text" id="cardNumber" maxlength="19" required class="w-full border rounded-lg px-3 py-2 pr-16" placeholder="1234 5678 9012 3456">
-            <div id="cardBrand" class="absolute right-2 top-2.5">
-              <img src="" alt="" class="card-brand-icon hidden" id="brandIcon">
-            </div>
+            <input id="cardNumber" maxlength="19" required class="w-full border px-3 py-2 pr-16 rounded-lg" placeholder="1234 5678 9012 3456">
+            <img id="brandIcon" class="card-brand-icon hidden absolute right-3 top-2.5" />
           </div>
         </div>
-        <div class="flex space-x-4">
-          <div class="w-1/2">
-            <label class="block text-sm font-medium mb-1">Expiry Date</label>
-            <input type="text" maxlength="5" required class="w-full border rounded-lg px-3 py-2" placeholder="MM/YY">
+        <div class="flex space-x-3">
+          <input maxlength="5" required class="w-1/2 border px-3 py-2 rounded-lg" placeholder="MM/YY">
+          <input maxlength="4" required class="w-1/2 border px-3 py-2 rounded-lg" placeholder="CVV">
+        </div>
+        <div>
+          <label>Billing Address</label>
+          <input required class="w-full border px-3 py-2 rounded-lg" placeholder="Address Line 1">
+          <input class="w-full border px-3 py-2 rounded-lg mt-2" placeholder="Address Line 2 (optional)">
+          <div class="flex space-x-2 mt-2">
+            <input required class="w-1/2 border px-3 py-2 rounded-lg" placeholder="City">
+            <input required class="w-1/2 border px-3 py-2 rounded-lg" placeholder="State">
           </div>
-          <div class="w-1/2">
-            <label class="block text-sm font-medium mb-1">CVV/CVC</label>
-            <input type="text" maxlength="4" required class="w-full border rounded-lg px-3 py-2" placeholder="123">
-          </div>
+          <input required class="w-full border px-3 py-2 rounded-lg mt-2" placeholder="Pincode">
         </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Pincode</label>
-          <input type="text" required class="w-full border rounded-lg px-3 py-2" placeholder="123456">
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Address Line 1</label>
-          <input type="text" required class="w-full border rounded-lg px-3 py-2" placeholder="123 Main Street">
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Address Line 2</label>
-          <input type="text" class="w-full border rounded-lg px-3 py-2" placeholder="Apt, Suite (optional)">
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">State</label>
-          <input type="text" required class="w-full border rounded-lg px-3 py-2" placeholder="California">
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Town / City</label>
-          <input type="text" required class="w-full border rounded-lg px-3 py-2" placeholder="Los Angeles">
-        </div>
-        <button type="submit" class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition duration-300">
+        <button type="submit" class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium">
           Pay Securely
         </button>
       </form>
@@ -106,29 +143,31 @@
   </div>
 
   <!-- OTP Modal -->
-  <div id="otpModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-    <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-sm text-center">
-      <h2 class="text-xl font-semibold mb-4">Enter OTP</h2>
-      <p class="text-gray-600 mb-2">A 6-digit code has been sent to your phone</p>
-      <input id="otpInput" type="text" maxlength="6" class="w-full border rounded-lg px-3 py-2 text-center mb-4" placeholder="123456">
-      <button onclick="submitOtp()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition duration-300">
-        Submit OTP
-      </button>
+  <div id="otpModal" class="modal-overlay hidden">
+    <div class="bg-white p-6 rounded-2xl w-full max-w-sm text-black text-center relative">
+      <button onclick="closeModal()" class="absolute top-2 right-3 text-xl font-bold">&times;</button>
+      <h3 class="text-lg font-semibold mb-2">Enter OTP</h3>
+      <input type="text" class="w-full border px-3 py-2 rounded-lg mb-3" placeholder="123456">
+      <button onclick="closeModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">Verify</button>
     </div>
   </div>
 
   <script>
+    function scrollCarousel(dir) {
+      document.getElementById("productCarousel").scrollBy({ left: dir * 300, behavior: 'smooth' });
+    }
+
+    function openPaymentModal(product, price) {
+      document.getElementById("paymentModal").classList.remove("hidden");
+    }
+
+    function closeModal() {
+      document.getElementById("paymentModal").classList.add("hidden");
+      document.getElementById("otpModal").classList.add("hidden");
+    }
+
     const cardNumberInput = document.getElementById('cardNumber');
     const brandIcon = document.getElementById('brandIcon');
-
-    const detectCardBrand = (number) => {
-      const cleanNumber = number.replace(/\s+/g, '');
-      if (/^4[0-9]{0,}$/.test(cleanNumber)) return 'visa';
-      if (/^5[1-5][0-9]{0,}$/.test(cleanNumber)) return 'mastercard';
-      if (/^3[47][0-9]{0,}$/.test(cleanNumber)) return 'amex';
-      if (/^6(?:011|5[0-9]{2})[0-9]{0,}$/.test(cleanNumber)) return 'discover';
-      return null;
-    };
 
     const cardImages = {
       visa: 'https://img.icons8.com/color/48/000000/visa.png',
@@ -137,42 +176,34 @@
       discover: 'https://img.icons8.com/color/48/000000/discover.png'
     };
 
-    cardNumberInput.addEventListener('input', () => {
-      let formatted = cardNumberInput.value.replace(/\D/g, '').match(/.{1,4}/g);
-      cardNumberInput.value = formatted ? formatted.join(' ') : '';
-      const brand = detectCardBrand(cardNumberInput.value);
-      if (brand && cardImages[brand]) {
-        brandIcon.src = cardImages[brand];
-        brandIcon.classList.remove('hidden');
-      } else {
-        brandIcon.classList.add('hidden');
-      }
-    });
-
-    function openPaymentModal(item, price) {
-      document.getElementById('paymentModal').classList.remove('hidden');
+    function detectCardBrand(number) {
+      const clean = number.replace(/\s+/g, '');
+      if (/^4/.test(clean)) return 'visa';
+      if (/^5[1-5]/.test(clean)) return 'mastercard';
+      if (/^3[47]/.test(clean)) return 'amex';
+      if (/^6(?:011|5)/.test(clean)) return 'discover';
+      return null;
     }
 
-    function closeModal() {
-      document.getElementById('paymentModal').classList.add('hidden');
-      document.getElementById('otpModal').classList.add('hidden');
+    if (cardNumberInput) {
+      cardNumberInput.addEventListener('input', () => {
+        const raw = cardNumberInput.value.replace(/\D/g, '').match(/.{1,4}/g);
+        cardNumberInput.value = raw ? raw.join(' ') : '';
+        const brand = detectCardBrand(cardNumberInput.value);
+        if (brand && cardImages[brand]) {
+          brandIcon.src = cardImages[brand];
+          brandIcon.classList.remove('hidden');
+        } else {
+          brandIcon.classList.add('hidden');
+        }
+      });
     }
 
-    document.getElementById('paymentForm').addEventListener('submit', function (e) {
+    document.getElementById("paymentForm")?.addEventListener("submit", function (e) {
       e.preventDefault();
-      document.getElementById('paymentModal').classList.add('hidden');
-      document.getElementById('otpModal').classList.remove('hidden');
+      document.getElementById("paymentModal").classList.add("hidden");
+      document.getElementById("otpModal").classList.remove("hidden");
     });
-
-    function submitOtp() {
-      const otp = document.getElementById('otpInput').value;
-      if (otp === '123456') {
-        alert('Payment successful! Thank you for your purchase.');
-        closeModal();
-      } else {
-        alert('Invalid OTP. Please try again.');
-      }
-    }
   </script>
 </body>
 </html>
