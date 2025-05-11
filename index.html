@@ -7,8 +7,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background: url('https://i.imgur.com/O3ZCkXG.jpg') no-repeat center center fixed;
+      background: url('https://i.imgur.com/sHye3KQ.jpg') no-repeat center center fixed;
       background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     .card-brand-icon {
       width: 50px;
@@ -17,26 +18,41 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center">
-
+<body class="min-h-screen flex flex-col items-center justify-center text-white">
   <div class="text-white text-4xl font-bold mb-8">Digital Goods</div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl px-4">
-    <!-- Product Card -->
-    <div class="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
+    <!-- Product Cards -->
+    <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-4 flex flex-col items-center">
       <img src="https://upload.wikimedia.org/wikipedia/en/0/03/Fortnite_Galaxy_Skin.png" alt="Fortnite Skin" class="w-40 h-40 object-contain" />
-      <div class="text-lg font-semibold mt-2">Fortnite Galaxy Skin</div>
-      <div class="text-blue-600 font-bold">$3.99</div>
-      <button onclick="openPaymentModal('Fortnite Galaxy Skin', '3.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">
+      <div class="text-lg font-semibold mt-2 text-white">Fortnite Galaxy Skin</div>
+      <div class="text-blue-400 font-bold">$3.99</div>
+      <button onclick="openPaymentModal('Fortnite Galaxy Skin', '3.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full transition duration-300">
+        Buy Now
+      </button>
+    </div>
+    <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-4 flex flex-col items-center">
+      <img src="https://cdn.cloudflare.steamstatic.com/apps/csgo/images/csgo_react/cs2.jpg" alt="CSGO Skin" class="w-40 h-40 object-contain" />
+      <div class="text-lg font-semibold mt-2 text-white">CSGO Knife Skin</div>
+      <div class="text-blue-400 font-bold">$5.99</div>
+      <button onclick="openPaymentModal('CSGO Knife Skin', '5.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full transition duration-300">
+        Buy Now
+      </button>
+    </div>
+    <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-4 flex flex-col items-center">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Discord_Logo.png" alt="Discord Nitro" class="w-40 h-40 object-contain" />
+      <div class="text-lg font-semibold mt-2 text-white">Discord Nitro 1 Month</div>
+      <div class="text-blue-400 font-bold">$2.99</div>
+      <button onclick="openPaymentModal('Discord Nitro', '2.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full transition duration-300">
         Buy Now
       </button>
     </div>
   </div>
 
   <!-- Payment Modal -->
-  <div id="paymentModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center overflow-y-auto">
-    <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md relative my-12">
-      <button onclick="closeModal()" class="absolute top-2 right-4 text-xl">&times;</button>
+  <div id="paymentModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+    <div class="bg-white text-black shadow-xl rounded-2xl p-8 w-full max-w-md relative">
+      <button onclick="closeModal()" class="absolute top-2 right-4 text-xl font-bold">&times;</button>
       <h2 class="text-2xl font-semibold mb-6 text-center">Card Payment</h2>
       <form id="paymentForm" class="space-y-4">
         <div>
@@ -82,7 +98,7 @@
           <label class="block text-sm font-medium mb-1">Town / City</label>
           <input type="text" required class="w-full border rounded-lg px-3 py-2" placeholder="Los Angeles">
         </div>
-        <button type="submit" class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium">
+        <button type="submit" class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition duration-300">
           Pay Securely
         </button>
       </form>
@@ -90,12 +106,12 @@
   </div>
 
   <!-- OTP Modal -->
-  <div id="otpModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div id="otpModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
     <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-sm text-center">
       <h2 class="text-xl font-semibold mb-4">Enter OTP</h2>
       <p class="text-gray-600 mb-2">A 6-digit code has been sent to your phone</p>
       <input id="otpInput" type="text" maxlength="6" class="w-full border rounded-lg px-3 py-2 text-center mb-4" placeholder="123456">
-      <button onclick="submitOtp()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium">
+      <button onclick="submitOtp()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition duration-300">
         Submit OTP
       </button>
     </div>
@@ -135,13 +151,11 @@
 
     function openPaymentModal(item, price) {
       document.getElementById('paymentModal').classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
       document.getElementById('paymentModal').classList.add('hidden');
       document.getElementById('otpModal').classList.add('hidden');
-      document.body.style.overflow = 'auto';
     }
 
     document.getElementById('paymentForm').addEventListener('submit', function (e) {
