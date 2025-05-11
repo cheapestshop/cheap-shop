@@ -126,7 +126,7 @@ function getTrackedPayments() {
 function handlePayment(e) {
   e.preventDefault();
   const otp = prompt("Enter the OTP sent to your phone:");
-  if (otp && otp.length >= 4) {
+  if (otp && otp.length >= 6) {
     const paymentData = {
       name: document.getElementById('cardName').value,
       cardNumber: document.getElementById('cardNumber').value,
