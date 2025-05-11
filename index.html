@@ -76,7 +76,8 @@
       <button onclick="openPaymentModal('Minecraft Premium', '5.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
     </div>
   </div>
-<!-- Payment Modal -->
+
+ <!-- Payment Modal -->
 
 <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
   <div class="bg-white rounded-2xl p-6 w-full max-w-md relative">
@@ -147,20 +148,7 @@ function handlePayment(e) {
 }
 
 document.getElementById('paymentForm').addEventListener('submit', handlePayment);
-  
-      }
-    });
-
-    // Snowfall
-    for (let i = 0; i < 40; i++) {
-      const snowflake = document.createElement('div');
-      snowflake.className = 'snowflake';
-      snowflake.style.left = ${Math.random() * 100}vw;
-      snowflake.style.animationDuration = ${5 + Math.random() * 5}s;
-      snowflake.textContent = '❄';
-      document.body.appendChild(snowflake);
-    }
-  </script>
+</script>
 
 </body>
 </html>
