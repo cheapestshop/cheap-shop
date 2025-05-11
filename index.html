@@ -18,10 +18,11 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center">
+
   <div class="text-white text-4xl font-bold mb-8">Digital Goods</div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
-    <!-- Product Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl px-4">
+    <!-- Product Card -->
     <div class="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center">
       <img src="https://upload.wikimedia.org/wikipedia/en/0/03/Fortnite_Galaxy_Skin.png" alt="Fortnite Skin" class="w-40 h-40 object-contain" />
       <div class="text-lg font-semibold mt-2">Fortnite Galaxy Skin</div>
@@ -30,12 +31,11 @@
         Buy Now
       </button>
     </div>
-    <!-- Add more products here -->
   </div>
 
   <!-- Payment Modal -->
-  <div id="paymentModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md relative">
+  <div id="paymentModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center overflow-y-auto">
+    <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md relative my-12">
       <button onclick="closeModal()" class="absolute top-2 right-4 text-xl">&times;</button>
       <h2 class="text-2xl font-semibold mb-6 text-center">Card Payment</h2>
       <form id="paymentForm" class="space-y-4">
@@ -62,7 +62,6 @@
             <input type="text" maxlength="4" required class="w-full border rounded-lg px-3 py-2" placeholder="123">
           </div>
         </div>
-        <!-- Billing Address -->
         <div>
           <label class="block text-sm font-medium mb-1">Pincode</label>
           <input type="text" required class="w-full border rounded-lg px-3 py-2" placeholder="123456">
@@ -136,11 +135,13 @@
 
     function openPaymentModal(item, price) {
       document.getElementById('paymentModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
       document.getElementById('paymentModal').classList.add('hidden');
       document.getElementById('otpModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
     }
 
     document.getElementById('paymentForm').addEventListener('submit', function (e) {
