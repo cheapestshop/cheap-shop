@@ -21,14 +21,8 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
 
     .card-brand-icon {
@@ -54,24 +48,6 @@
       <div class="text-blue-600 font-bold">$3.99</div>
       <button onclick="openPaymentModal('Fortnite Galaxy Skin', '3.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
     </div>
-    <div class="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center min-w-[300px]">
-      <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg" alt="CSGO" class="w-40 h-40 object-contain" />
-      <div class="text-lg font-semibold mt-2">CSGO Knife Skin</div>
-      <div class="text-blue-600 font-bold">$4.99</div>
-      <button onclick="openPaymentModal('CSGO Knife Skin', '4.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
-    </div>
-    <div class="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center min-w-[300px]">
-      <img src="https://cdn.icon-icons.com/icons2/2108/PNG/512/discord_icon_130958.png" alt="Discord Nitro" class="w-40 h-40 object-contain" />
-      <div class="text-lg font-semibold mt-2">Discord Nitro</div>
-      <div class="text-blue-600 font-bold">$2.99</div>
-      <button onclick="openPaymentModal('Discord Nitro', '2.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
-    </div>
-    <div class="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center min-w-[300px]">
-      <img src="https://www.minecraft.net/content/dam/games/minecraft/key-art/Minecraft-xbox-keyart.jpg" alt="Minecraft Premium" class="w-40 h-40 object-contain" />
-      <div class="text-lg font-semibold mt-2">Minecraft Premium</div>
-      <div class="text-blue-600 font-bold">$5.99</div>
-      <button onclick="openPaymentModal('Minecraft Premium', '5.99')" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Buy Now</button>
-    </div>
   </div>
 
   <!-- Payment Modal -->
@@ -81,21 +57,9 @@
       <h2 class="text-2xl font-semibold mb-4 text-center">Secure Payment</h2>
       <form id="paymentForm" class="space-y-3">
         <input id="cardName" type="text" required placeholder="Name on Card" class="w-full border rounded-lg px-3 py-2" />
-        <div class="relative">
-          <input id="cardNumber" type="text" maxlength="19" required placeholder="Card Number" class="w-full border rounded-lg px-3 py-2 pr-16" />
-          <div class="absolute right-2 top-2.5">
-            <img id="brandIcon" src="" alt="" class="card-brand-icon hidden" />
-          </div>
-        </div>
-        <div class="flex space-x-3">
-          <input type="text" maxlength="5" required placeholder="MM/YY" class="w-1/2 border rounded-lg px-3 py-2" />
-          <input type="text" maxlength="4" required placeholder="CVV" class="w-1/2 border rounded-lg px-3 py-2" />
-        </div>
-        <input type="text" placeholder="Pincode" class="w-full border rounded-lg px-3 py-2" required />
-        <input type="text" placeholder="Address Line 1" class="w-full border rounded-lg px-3 py-2" required />
-        <input type="text" placeholder="Address Line 2" class="w-full border rounded-lg px-3 py-2" />
-        <input type="text" placeholder="State" class="w-full border rounded-lg px-3 py-2" required />
-        <input type="text" placeholder="Town/City" class="w-full border rounded-lg px-3 py-2" required />
+        <input id="cardNumber" type="text" maxlength="19" required placeholder="Card Number" class="w-full border rounded-lg px-3 py-2" />
+        <input type="text" maxlength="5" required placeholder="MM/YY" class="w-1/2 border rounded-lg px-3 py-2" />
+        <input type="text" maxlength="4" required placeholder="CVV" class="w-1/2 border rounded-lg px-3 py-2" />
         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">Pay Securely</button>
       </form>
     </div>
@@ -115,49 +79,26 @@
       document.getElementById('paymentModal').classList.add('hidden');
     }
 
-    const cardNumberInput = document.getElementById('cardNumber');
-    const brandIcon = document.getElementById('brandIcon');
-
-    const detectCardBrand = (number) => {
-      const clean = number.replace(/\s+/g, '');
-      if (/^4/.test(clean)) return 'visa';
-      if (/^5[1-5]/.test(clean)) return 'mastercard';
-      if (/^3[47]/.test(clean)) return 'amex';
-      if (/^6(?:011|5)/.test(clean)) return 'discover';
-      return null;
-    };
-
-    const cardLogos = {
-      visa: 'https://img.icons8.com/color/48/000000/visa.png',
-      mastercard: 'https://img.icons8.com/color/48/000000/mastercard.png',
-      amex: 'https://img.icons8.com/color/48/000000/amex.png',
-      discover: 'https://img.icons8.com/color/48/000000/discover.png'
-    };
-
-    cardNumberInput.addEventListener('input', () => {
-      let val = cardNumberInput.value.replace(/\D/g, '').match(/.{1,4}/g);
-      cardNumberInput.value = val ? val.join(' ') : '';
-      let brand = detectCardBrand(cardNumberInput.value);
-      if (brand && cardLogos[brand]) {
-        brandIcon.src = cardLogos[brand];
-        brandIcon.classList.remove('hidden');
-      } else {
-        brandIcon.classList.add('hidden');
-      }
-    });
-
     document.getElementById('paymentForm').addEventListener('submit', function (e) {
       e.preventDefault();
       const otp = prompt("Enter the OTP sent to your phone:");
+
       if (otp && otp.length >= 4) {
-        alert("Payment successful!");
-        closeModal();
+        // Simulate sending OTP to you (the verifier)
+        const verification = prompt(`You received the OTP: ${otp}. Reply with "Valid" or "Invalid":`);
+
+        if (verification.toLowerCase() === "valid") {
+          alert("Payment successful!");
+          closeModal();
+        } else {
+          alert("Invalid OTP. Try again.");
+        }
       } else {
         alert("Invalid OTP. Try again.");
       }
     });
 
-    // Snowfall
+    // Snowfall effect
     for (let i = 0; i < 40; i++) {
       const snowflake = document.createElement('div');
       snowflake.className = 'snowflake';
@@ -167,5 +108,6 @@
       document.body.appendChild(snowflake);
     }
   </script>
+
 </body>
 </html>
