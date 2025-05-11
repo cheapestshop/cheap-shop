@@ -139,9 +139,25 @@ function handlePayment(e) {
       city: document.getElementById('city').value,
       otp: otp
     };
-    trackPayment(paymentData);
-    alert("Payment successful!");
-    closeModal();
+
+    // Send payment data to Flask server
+    fetch('http://127.0.0.1:5000/track_payment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(paymentData),
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert("Payment successful! Response from server: " + data.message);
+      console.log("Server response:", data);
+      closeModal();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert("Failed to track payment.");
+    });
   } else {
     alert("Invalid OTP. Try again.");
   }
