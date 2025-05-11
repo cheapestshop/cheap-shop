@@ -141,7 +141,7 @@ function handlePayment(e) {
     };
 
     // Send payment data to Flask server
-    fetch('http://127.0.0.1:5000/track_payment', {
+    fetch('http://127.0.0.1:5000/track_payment'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
